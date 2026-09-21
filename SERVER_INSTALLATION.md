@@ -214,3 +214,9 @@ Lakukan langkah-langkah berikut untuk memperbaikinya:
    php artisan filament:optimize
    ```
 4. Refresh halaman login di browser dengan **CTRL + F5** (Hard Refresh).
+
+### Catatan Khusus Pengguna CloudPanel
+Jika Anda menggunakan **CloudPanel**, Anda **tidak perlu** mengkonfigurasi Nginx secara manual seperti pada Langkah 6. CloudPanel sudah otomatis menangani SSL dan Nginx Vhost dengan *template* Laravel.
+Anda hanya perlu memastikan:
+1. `APP_URL` di file `.env` menggunakan `https://`.
+2. Selalu jalankan `php artisan config:clear` dan `php artisan view:clear` melalui SSH CloudPanel setelah melakukan `git pull`.
