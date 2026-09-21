@@ -192,3 +192,25 @@ sudo ln -s /etc/nginx/sites-available/packingin /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
+
+## 7. Troubleshooting
+
+### Mengatasi Error "405 Method Not Allowed" pada Login Filament / Admin
+Jika Anda mengalami error **405 Method Not Allowed (The POST method is not supported for route admin/login)** saat mencoba login, hal ini biasanya disebabkan oleh aset Livewire JavaScript yang diblokir oleh browser (Mixed Content) karena ketidakcocokan skema `http://` dan `https://`. 
+
+Lakukan langkah-langkah berikut untuk memperbaikinya:
+1. Pastikan `APP_URL` di file `.env` **wajib** menggunakan `https://` (contoh: `APP_URL=https://domain-anda.com`).
+2. Bersihkan seluruh cache konfigurasi Laravel:
+   ```bash
+   php artisan config:clear
+   php artisan view:clear
+   php artisan route:clear
+   php artisan filament:optimize-clear
+   ```
+3. Jika ingin me-rebuild cache kembali:
+   ```bash
+   php artisan config:cache
+   php artisan view:cache
+   php artisan filament:optimize
+   ```
+4. Refresh halaman login di browser dengan **CTRL + F5** (Hard Refresh).
