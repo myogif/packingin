@@ -50,8 +50,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // Secara bawaan mengizinkan semua user yang sudah login.
-        // Anda bisa mengubahnya, contoh: return $this->email === 'admin@domain.com';
-        return true;
+        // Hanya izinkan user dengan email tertentu untuk masuk ke panel admin
+        return $this->email === 'admin@example.com';
     }
 }
