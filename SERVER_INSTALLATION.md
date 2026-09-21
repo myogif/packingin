@@ -77,14 +77,14 @@ EXIT;
 ```
 
 ## 5. Deployment Aplikasi Laravel
-Arahkan direktori ke *document root* server Anda (contoh di `/var/www/`) lalu *clone* *source code* (atau gunakan FTP/SFTP untuk mentransfer kode ke server).
+Arahkan direktori ke *document root* server Anda di CloudPanel (contoh di `/home/karyadev-packing/htdocs/`) lalu *clone* *source code* (atau gunakan FTP/SFTP untuk mentransfer kode ke server).
 
 ```bash
-cd /var/www/
+cd /home/karyadev-packing/htdocs/
 # Contoh jika clone dari repo
-# git clone https://github.com/username/packingin.git packingin
+# git clone https://github.com/username/packingin.git packing.karyadev.com
 
-cd packingin
+cd packing.karyadev.com
 
 # Install dependensi PHP
 composer install --optimize-autoloader --no-dev
@@ -102,7 +102,7 @@ Di dalam file `.env`, sesuaikan baris-baris berikut:
 ```env
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://domain-anda.com
+APP_URL=https://packing.karyadev.com
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -127,11 +127,11 @@ php artisan route:cache
 php artisan view:cache
 ```
 
-Pastikan *permissions* *folder* sudah benar agar web server (biasanya `www-data`) dapat menulis file video:
+Pastikan *permissions* *folder* sudah benar agar web server dapat menulis file video (Catatan: di CloudPanel biasanya *user* adalah nama *site* Anda, misal `karyadev-packing`):
 ```bash
-sudo chown -R www-data:www-data /var/www/packingin
-sudo chmod -R 775 /var/www/packingin/storage
-sudo chmod -R 775 /var/www/packingin/bootstrap/cache
+sudo chown -R karyadev-packing:karyadev-packing /home/karyadev-packing/htdocs/packing.karyadev.com
+sudo chmod -R 775 /home/karyadev-packing/htdocs/packing.karyadev.com/storage
+sudo chmod -R 775 /home/karyadev-packing/htdocs/packing.karyadev.com/bootstrap/cache
 ```
 
 ## 6. Konfigurasi Web Server (Contoh: Nginx)
@@ -145,8 +145,8 @@ Isikan konfigurasi standar Laravel berikut:
 ```nginx
 server {
     listen 80;
-    server_name domain-anda.com;
-    root /var/www/packingin/public;
+    server_name packing.karyadev.com;
+    root /home/karyadev-packing/htdocs/packing.karyadev.com/public;
 
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
@@ -199,7 +199,7 @@ sudo systemctl reload nginx
 Jika Anda mengalami error **405 Method Not Allowed (The POST method is not supported for route admin/login)** saat mencoba login, hal ini biasanya disebabkan oleh aset Livewire JavaScript yang diblokir oleh browser (Mixed Content) karena ketidakcocokan skema `http://` dan `https://`. 
 
 Lakukan langkah-langkah berikut untuk memperbaikinya:
-1. Pastikan `APP_URL` di file `.env` **wajib** menggunakan `https://` (contoh: `APP_URL=https://domain-anda.com`).
+1. Pastikan `APP_URL` di file `.env` **wajib** menggunakan `https://` (contoh: `APP_URL=https://packing.karyadev.com`).
 2. Bersihkan seluruh cache konfigurasi Laravel:
    ```bash
    php artisan config:clear
