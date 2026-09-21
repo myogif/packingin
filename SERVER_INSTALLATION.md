@@ -200,7 +200,12 @@ Jika Anda mengalami error **405 Method Not Allowed (The POST method is not suppo
 
 Lakukan langkah-langkah berikut untuk memperbaikinya:
 1. Pastikan `APP_URL` di file `.env` **wajib** menggunakan `https://` (contoh: `APP_URL=https://packing.karyadev.com`).
-2. Bersihkan seluruh cache konfigurasi Laravel:
+2. **(SANGAT PENTING)** Publikasikan aset statis Livewire dan Filament agar Nginx/CloudPanel bisa menemukannya secara fisik di server:
+   ```bash
+   php artisan livewire:publish --assets
+   php artisan filament:assets
+   ```
+3. Bersihkan seluruh cache konfigurasi Laravel:
    ```bash
    php artisan config:clear
    php artisan view:clear
